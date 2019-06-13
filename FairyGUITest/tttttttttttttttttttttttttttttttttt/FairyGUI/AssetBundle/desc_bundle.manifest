@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2655144478
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d09e202c70a6317660ccd28e0f386144
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/desc_bundle/Package1_fui.bytes
+Dependencies: []
