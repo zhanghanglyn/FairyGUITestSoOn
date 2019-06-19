@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : FSMStateBase {
+public class PlayerIdleState : PlayerStateBase
+{
 
     public Animator animator;
 

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWalkState : FSMStateBase {
+public class PlayerWalkState : PlayerStateBase
+{
 
     Camera m_camera;
     Vector3 last_inputVec;
@@ -90,7 +91,7 @@ public class PlayerWalkState : FSMStateBase {
             m_graduaVal.ClearByKey("speed");
             if (m_animator != null)
             {
-                Debug.Log("####  cur_speed :   " + cur_speed);
+                //Debug.Log("####  cur_speed :   " + cur_speed);
                 float speed = m_graduaVal.AddGradualValue("speedDown", cur_speed, 0, StopRunGradualSpeed);
                 //进行一次设置之后，就将原本的跑步速度置为0
                 cur_speed = speed;
@@ -99,12 +100,19 @@ public class PlayerWalkState : FSMStateBase {
 
                 if (speed <= 0)
                 {
-                    Debug.Log("####  speed :   " + speed);
+                    //Debug.Log("####  speed :   " + speed);
                     fsmMgr.TransState(TransConditionID.NEW_PLAYER_IDLE);
                     m_graduaVal.Clear();
                 }
 
             }
+        }
+
+        //如果有切换动作按键被按下，则会切换状态
+        if (GetKeyTransState(InputMgr.GetInstance().GetCurKeyDown()) != TransConditionID.CONDITION_NULL)
+        {
+            fsmMgr.TransState(GetKeyTransState(InputMgr.GetInstance().GetCurKeyDown()));
+            m_graduaVal.Clear();
         }
     }
 

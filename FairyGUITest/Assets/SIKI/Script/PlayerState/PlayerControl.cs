@@ -20,6 +20,7 @@ public class PlayerControl : MonoBehaviour {
         m_animator = GetComponent<Animator>();
 
         InitState();
+        
     }
 	
 	// Update is called once per frame
@@ -39,11 +40,19 @@ public class PlayerControl : MonoBehaviour {
         PlayerWalkState playerWalkState = new PlayerWalkState(m_fsmmgr, gameObject, m_camera,
             m_animator, 0.04f, StartRunGradualSpeed , StopRunGradualSpeed, Animator.StringToHash("speed"), Animator.StringToHash("angle"));
         playerWalkState.AddCondition(TransConditionID.NEW_PLAYER_IDLE , StateID.NEW_PLAYER_IDLE);
+        playerWalkState.AddCondition(TransConditionID.NEW_PLAYER_JUMP, StateID.NEW_PLAYER_JUMP);
+        //添加跳跃按钮的状态
+        playerWalkState.AddKeyCondition((KeyCode)KeyEnum.KeyJump, TransConditionID.NEW_PLAYER_JUMP);
+
+        PlayerJumpState playerJumpState = new PlayerJumpState(m_fsmmgr, m_animator, Animator.StringToHash("bJump"));
+        playerJumpState.AddCondition(TransConditionID.NEW_PLAYER_WALK , StateID.NEW_PLAYER_WALK);
 
         m_curState = playerIdleState;
 
         m_fsmmgr.Init(StateID.NEW_PLAYER_IDLE, playerIdleState);
         m_fsmmgr.AddState(StateID.NEW_PLAYER_WALK, playerWalkState);
+        m_fsmmgr.AddState(StateID.NEW_PLAYER_JUMP, playerJumpState);
 
     }
+
 }
