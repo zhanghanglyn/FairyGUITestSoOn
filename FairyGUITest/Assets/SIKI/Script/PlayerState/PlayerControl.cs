@@ -12,6 +12,8 @@ public class PlayerControl : MonoBehaviour {
     public int StartRunGradualSpeed = 150;  //开始跑到最快的加速时间
     public int StopRunGradualSpeed = 150;    //开始停止跑到站立的加速时间
 
+    public float jumpHitDistance = 6f;
+
     // Use this for initialization
     void Start () {
         if (m_camera == null)
@@ -44,7 +46,8 @@ public class PlayerControl : MonoBehaviour {
         //添加跳跃按钮的状态
         playerWalkState.AddKeyCondition((KeyCode)KeyEnum.KeyJump, TransConditionID.NEW_PLAYER_JUMP);
 
-        PlayerJumpState playerJumpState = new PlayerJumpState(m_fsmmgr, m_animator, Animator.StringToHash("bJump"));
+        PlayerJumpState playerJumpState = new PlayerJumpState(m_fsmmgr, m_animator, Animator.StringToHash("bJump"),
+            gameObject, jumpHitDistance , Animator.StringToHash("JumpCurve"));
         playerJumpState.AddCondition(TransConditionID.NEW_PLAYER_WALK , StateID.NEW_PLAYER_WALK);
 
         m_curState = playerIdleState;

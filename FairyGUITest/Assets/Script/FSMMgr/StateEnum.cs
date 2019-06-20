@@ -26,8 +26,9 @@ public enum StateID {
     /////////   新IK玩家控制
     NEW_PLAYER_IDLE     =   301,
     NEW_PLAYER_WALK     =   302,    //行走、跑步动作，包含了左右转向
+    NEW_PLAYER_JUMP     =   303,    //跳跃
+    NEW_PLAYER_SLIDE    =   304,    //滑行
 
-    
 }
 
 /// <summary>
@@ -58,5 +59,7 @@ public enum TransConditionID
     ////////    新玩家控制相关
     NEW_PLAYER_IDLE     =   301,
     NEW_PLAYER_WALK     =   302,
+    NEW_PLAYER_JUMP     =   303,
+    NEW_PLAYER_SLIDE    =   304,
 
 }

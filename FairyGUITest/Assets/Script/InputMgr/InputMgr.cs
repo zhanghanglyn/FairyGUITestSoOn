@@ -32,16 +32,16 @@ public class InputMgr{
         float vec_z = 0;
 #if UNITY_ANDROID
         //Touch touchInfo = Input.GetTouch(0);
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey((KeyCode)KeyEnum.KeyLeft))
             vec_x = -1;
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey((KeyCode)KeyEnum.KeyRight))
             vec_x = 1;
         else
             vec_x = 0;
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey((KeyCode)KeyEnum.KeyUp))
             vec_z = 1;
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey((KeyCode)KeyEnum.KeyDown))
             vec_z = -1;
         else
             vec_y = 0;
@@ -76,14 +76,14 @@ public class InputMgr{
 
 #if UNITY_ANDROID
         //Touch touchInfo = Input.GetTouch(0);
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey((KeyCode)KeyEnum.KeyUp))
             finalVec = forward;
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey((KeyCode)KeyEnum.KeyDown))
             finalVec = finalVec + back;
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey((KeyCode)KeyEnum.KeyLeft))
             finalVec = finalVec + left;
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey((KeyCode)KeyEnum.KeyRight))
             finalVec = finalVec + right;
 
 #elif UNITY_IPHONE
@@ -96,5 +96,25 @@ public class InputMgr{
 
 
         return finalVec.normalized;
+    }
+
+    /// <summary>
+    /// 获取当前按下的按键,需要放在update中
+    /// </summary>
+    /// <returns></returns>
+    public KeyCode GetCurKeyDown()
+    {
+        if (Input.anyKeyDown)
+        {
+            foreach (KeyCode keyCode in KeyEnum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKeyDown(keyCode))
+                {
+                    return keyCode;
+                }
+            }
+        }
+
+        return KeyCode.None;
     }
 }
