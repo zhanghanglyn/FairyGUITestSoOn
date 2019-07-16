@@ -11,32 +11,6 @@ namespace UMotionEditor
         // Public Properties
         //********************************************************************************
 
-        public static event System.Action<SceneView> OnSceneGui
-        {
-            add
-            {
-                #if UNITY_2019_1_OR_NEWER
-                SceneView.duringSceneGui += value;
-                #else
-                legacySceneViewGUI += value;
-                if (!initialized)
-                {
-                    // Doing this in a static constructor instead caused an exception in Unity 2017.4
-                    SceneView.onSceneGUIDelegate += delegate(SceneView sceneView) { legacySceneViewGUI(sceneView); };
-                    initialized = true;
-                }
-                #endif
-            }
-            remove
-            {
-                #if UNITY_2019_1_OR_NEWER
-                SceneView.duringSceneGui -= value;
-                #else
-                legacySceneViewGUI -= value;
-                #endif
-            }
-        }
-
         //********************************************************************************
         // Private Properties
         //********************************************************************************
@@ -48,24 +22,20 @@ namespace UMotionEditor
         //----------------------
         // Internal
         //----------------------
-        #if !UNITY_2019_1_OR_NEWER
-        private static event System.Action<SceneView> legacySceneViewGUI;
-        private static bool initialized = false;
-        #endif
 
         //********************************************************************************
         // Public Methods
         //********************************************************************************
 
         [MenuItem("Window/UMotion Editor/Contact Support", true, 1232)]
-        public static bool UMotionSupportMenuItemValidate()
+        public static bool RestartUMotionMenuItemValidate()
         {
             CheckCurrentAssembly();
             return true;
         }
 
         [MenuItem("Window/UMotion Editor/Contact Support", false, 1232)]
-        public static void UMotionSupportMenuItem()
+        public static void RestartUMotionMenuItem()
         {
             Help.BrowseURL("https://support.soxware.com");
         }

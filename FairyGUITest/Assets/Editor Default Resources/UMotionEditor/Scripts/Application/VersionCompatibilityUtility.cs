@@ -93,23 +93,11 @@ namespace UMotionEditor
             }
         }
 
-        public static bool Unity2018_3_OrNewer
+        public static bool HasDepthSortingBug
         {
             get
             {
-                #if UNITY_2018_3_OR_NEWER
-                return true;
-                #else
-                return false;
-                #endif
-            }
-        }
-
-        public static bool Unity2019_1_Or_Newer
-        {
-            get
-            {
-                #if UNITY_2019_1_OR_NEWER
+                #if UNITY_2017_3 || UNITY_2017_4
                 return true;
                 #else
                 return false;

@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<div class="versionHeader">
-			<p class="versionText">Version: <b>1.18</b> </p>
+			<p class="versionText">Version: <b>1.16</b> </p>
 		</div>
 		<div class="leftContent">
 			<div class="leftContentInner">
@@ -83,10 +83,6 @@
 <li class="file"><a href="InPractice1.html">1) Our First Animation</a></li>
 
 <li class="file"><a href="InPractice2.html">2) Editing Animations</a></li>
-
-<li class="file"><a href="InPractice3.html">3) Customizing an animation for a RPG</a></li>
-
-<li class="file"><a href="InPractice4.html">4) Unity Timeline & Weighted Tangents</a></li>
 </ol>
 </li>
 
@@ -208,8 +204,6 @@
 
 <li class="file"><a href="UnityTimelineIntegration.html">Unity Timeline Integration</a></li>
 
-<li class="file"><a href="UMotionAPI.html">UMotion API</a></li>
-
 <li class="file"><a href="ExportingAnimationsFAQ.html"><b><u>Exporting Animations FAQ</u></b></a></li>
 
 <li class="file"><a href="Support.html">Support / FAQ</a></li>
@@ -230,7 +224,6 @@
     <li class="listItem"><span class="listText"><a href="#rootMotionIssues" class="link">Issues with root motion</a></span></li>
     <li class="listItem"><span class="listText"><a href="#humanoidDifferences" class="link">Differences/errors in humanoid animations</a></span></li>
     <li class="listItem"><span class="listText"><a href="#fbxJitter" class="link">Exported *.fbx has noticable jitter</a></span></li>
-    <li class="listItem"><span class="listText"><a href="#ikPinningJitter" class="link">IK pinned hand/foot jitter's in the exported animation</a></span></li>
     <li class="listItem"><span class="listText"><a href="#animSize" class="link">The exported *.anim file size is quite huge</a></span></li>
 </ul><p class="textBlock">Please contact the <a href="support.html" class="link">Support</a> if none of the solutions work for you.</p><h2 class="headline2" id="fbxHumanoidIssue">Exported humanoid *.fbx looks wrong</h2><p class="textBlock">This usually happens when you exported an animation to *.fbx (e.g. the "IKPullupAnimation" animation from the examples) and configured the exported animation to humanoid. When playing the animation, it looks different to the original animation:</p><img src="../images/ExportFbxCommonIssue.png" class="image"></img>
 <p class="imageText">Exporting "IKPullupAnimation" to *.fbx</p><p class="textBlock">This happens when the humanoid avatar isn't configured correctly. There are several solutions:</p><ul class="listMain">
@@ -312,8 +305,8 @@ The humanoid animation system abstracts the animation data in such a way, that i
 </p><p class="textBlock">
 <b>Learn more about humanoid:</b> <a href="https://blogs.unity3d.com/2014/05/26/mecanim-humanoids/" class="link">Unity Blog - Mecanim Humanoids</a>
 </p><p class="textBlock">
-Usually small errors are acceptable as they most probably won't be notiecable for players. But in cases you need 100% accuracy, use generic instead of humanoid. Consider using legacy in case you want to save some performance (e.g. on mobile). The <a href="http://bit.ly/2GsneLA" class="link">Animation Converter</a> can help you converting between the different animation formats.
-</p><h2 class="headline2" id="fbxJitter">Exported *.fbx has noticable jitter</h2><p class="textBlock">Jitter/wiggle/stutter can be introduced by animation compression. Select the *.fbx and open the "Animation" tab in the "Inspector". Set "Anim. Compression" to "None" or play with the "Position/Rotation/Scale Error" values.</p><h2 class="headline2" id="ikPinningJitter">IK pinned hand/foot jitter's in the exported animation</h2><p class="textBlock">Fast paced animations that use IK pinning can show some wiggle/jitter on the pinned hand/foot. If you go through the exported animation frame by frame using the frame cursor in Unity's Animation Window you will notice that the animation was exported correctly and the hand/foot is perfectly stable. But as soon as you click on the play button (in the Animation Window), you can notice the jitter of the hand/feet again. This problem is introduced by the interpolation that is happening between key frames and is more noticable the more change there is between two keys. Increasing the framerate of the animation in the <a href="ClipSettings.html" class="link">UMotion Clip Settings</a> to something like 120 or even 180 fps (then exporting the animation clip again) will reduce the amount of interpolation error.</p><h2 class="headline2" id="animSize">The exported *.anim file size is quite huge</h2><p class="textBlock">Please take a look at <a href="http://support.soxware.com//166/why-animation-file-size-grow-up-after-export" class="link">this support answer</a> for a detailed answer.
+Usually small errors are acceptable as they most probably won't be notiecable for players. But in cases you need 100% accuracy, use generic instead of humanoid. Consider using legacy in case you want to save some performance (e.g. on mobile). The <a href="http://bit.ly/2AVOqwx" class="link">Animation Converter</a> can help you converting between the different animation formats.
+</p><h2 class="headline2" id="fbxJitter">Exported *.fbx has noticable jitter</h2><p class="textBlock">Jitter/wiggle/stutter can be introduced by animation compression. Select the *.fbx and open the "Animation" tab in the "Inspector". Set "Anim. Compression" to "None" or play with the "Position/Rotation/Scale Error" values.</p><h2 class="headline2" id="animSize">The exported *.anim file size is quite huge</h2><p class="textBlock">Please take a look at <a href="http://support.soxware.com//166/why-animation-file-size-grow-up-after-export" class="link">this support answer</a> for a detailed answer.
 </br></br>
 <b>Long story short:</b> The size a *.anim file has in a built game, is displayed in its inspector.</p><img src="../images/ExportClipSize.png" class="image"></img>
 <p class="imageText">*.anim inspector shows clip size</p><p class="textBlock">The size it has on disk in your development environment is larger due to additional "editor only curves" and probably due to the animation being stored as text.</p>

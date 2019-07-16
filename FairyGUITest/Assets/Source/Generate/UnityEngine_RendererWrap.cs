@@ -10,6 +10,8 @@ public class UnityEngine_RendererWrap
 		L.RegFunction("HasPropertyBlock", HasPropertyBlock);
 		L.RegFunction("SetPropertyBlock", SetPropertyBlock);
 		L.RegFunction("GetPropertyBlock", GetPropertyBlock);
+		L.RegFunction("GetMaterials", GetMaterials);
+		L.RegFunction("GetSharedMaterials", GetSharedMaterials);
 		L.RegFunction("GetClosestReflectionProbes", GetClosestReflectionProbes);
 		L.RegFunction("New", _CreateUnityEngine_Renderer);
 		L.RegFunction("__eq", op_Equality);
@@ -23,6 +25,7 @@ public class UnityEngine_RendererWrap
 		L.RegVar("lightProbeUsage", get_lightProbeUsage, set_lightProbeUsage);
 		L.RegVar("reflectionProbeUsage", get_reflectionProbeUsage, set_reflectionProbeUsage);
 		L.RegVar("renderingLayerMask", get_renderingLayerMask, set_renderingLayerMask);
+		L.RegVar("rendererPriority", get_rendererPriority, set_rendererPriority);
 		L.RegVar("sortingLayerName", get_sortingLayerName, set_sortingLayerName);
 		L.RegVar("sortingLayerID", get_sortingLayerID, set_sortingLayerID);
 		L.RegVar("sortingOrder", get_sortingOrder, set_sortingOrder);
@@ -143,6 +146,40 @@ public class UnityEngine_RendererWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Renderer.GetPropertyBlock");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetMaterials(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)ToLua.CheckObject<UnityEngine.Renderer>(L, 1);
+			System.Collections.Generic.List<UnityEngine.Material> arg0 = (System.Collections.Generic.List<UnityEngine.Material>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.List<UnityEngine.Material>));
+			obj.GetMaterials(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetSharedMaterials(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)ToLua.CheckObject<UnityEngine.Renderer>(L, 1);
+			System.Collections.Generic.List<UnityEngine.Material> arg0 = (System.Collections.Generic.List<UnityEngine.Material>)ToLua.CheckObject(L, 2, typeof(System.Collections.Generic.List<UnityEngine.Material>));
+			obj.GetSharedMaterials(arg0);
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -353,6 +390,25 @@ public class UnityEngine_RendererWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index renderingLayerMask on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_rendererPriority(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
+			int ret = obj.rendererPriority;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index rendererPriority on a nil value");
 		}
 	}
 
@@ -809,6 +865,25 @@ public class UnityEngine_RendererWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index renderingLayerMask on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_rendererPriority(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Renderer obj = (UnityEngine.Renderer)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.rendererPriority = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index rendererPriority on a nil value");
 		}
 	}
 

@@ -28,6 +28,7 @@ public enum StateID {
     NEW_PLAYER_WALK     =   302,    //行走、跑步动作，包含了左右转向
     NEW_PLAYER_JUMP     =   303,    //跳跃
     NEW_PLAYER_SLIDE    =   304,    //滑行
+    NEW_PLAYER_PICK     =   305,    //捡东西
 
 }
 
@@ -61,5 +62,6 @@ public enum TransConditionID
     NEW_PLAYER_WALK     =   302,
     NEW_PLAYER_JUMP     =   303,
     NEW_PLAYER_SLIDE    =   304,
+    NEW_PLAYER_PICK     =   305,
 
 }

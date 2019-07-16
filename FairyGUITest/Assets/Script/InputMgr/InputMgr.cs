@@ -49,9 +49,21 @@ public class InputMgr{
 #elif UNITY_IPHONE
         Touch touchInfo = Input.GetTouch(0);
 #elif UNITY_STANDALONE_WIN || UNITY_EDITOR
-        Input.GetKeyDown("");
+        if (Input.GetKey((KeyCode)KeyEnum.KeyLeft))
+            vec_x = -1;
+        else if (Input.GetKey((KeyCode)KeyEnum.KeyRight))
+            vec_x = 1;
+        else
+            vec_x = 0;
+
+        if (Input.GetKey((KeyCode)KeyEnum.KeyUp))
+            vec_z = 1;
+        else if (Input.GetKey((KeyCode)KeyEnum.KeyDown))
+            vec_z = -1;
+        else
+            vec_y = 0;
 #else
-                            string.Empty;  
+        string.Empty;  
 #endif
 
 
@@ -89,9 +101,17 @@ public class InputMgr{
 #elif UNITY_IPHONE
         Touch touchInfo = Input.GetTouch(0);
 #elif UNITY_STANDALONE_WIN || UNITY_EDITOR
-        Input.GetKeyDown("");
+        if (Input.GetKey((KeyCode)KeyEnum.KeyUp))
+            finalVec = forward;
+        else if (Input.GetKey((KeyCode)KeyEnum.KeyDown))
+            finalVec = finalVec + back;
+
+        if (Input.GetKey((KeyCode)KeyEnum.KeyLeft))
+            finalVec = finalVec + left;
+        else if (Input.GetKey((KeyCode)KeyEnum.KeyRight))
+            finalVec = finalVec + right;
 #else
-                            string.Empty;  
+        string.Empty;  
 #endif
 
 

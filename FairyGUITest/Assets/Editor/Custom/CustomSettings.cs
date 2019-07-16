@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using LuaInterface;
 using UnityEditor;
-using FairyGUI;
-using FairyGUIEditor;
 
 using BindType = ToLuaMenu.BindType;
 using System.Reflection;
@@ -61,48 +59,7 @@ public static class CustomSettings
                         
         _GT(typeof(LuaInjectionStation)),
         _GT(typeof(InjectType)),
-        _GT(typeof(Debugger)).SetNameSpace(null),
-        _GT(typeof(EventContext)),
-        _GT(typeof(EventDispatcher)),
-        _GT(typeof(EventListener)),
-        _GT(typeof(InputEvent)),
-        _GT(typeof(DisplayObject)),
-        _GT(typeof(Container)),
-        _GT(typeof(Stage)),
-        _GT(typeof(FairyGUI.Controller)),
-        _GT(typeof(GObject)),
-        _GT(typeof(GGraph)),
-        _GT(typeof(GGroup)),
-        _GT(typeof(GImage)),
-        _GT(typeof(GLoader)),
-        _GT(typeof(GMovieClip)),
-        _GT(typeof(TextFormat)),
-        _GT(typeof(GTextField)),
-        _GT(typeof(GRichTextField)),
-        _GT(typeof(GTextInput)),
-        _GT(typeof(GComponent)),
-        _GT(typeof(GList)),
-        _GT(typeof(GRoot)),
-        _GT(typeof(GLabel)),
-        _GT(typeof(GButton)),
-        _GT(typeof(GComboBox)),
-        _GT(typeof(GProgressBar)),
-        _GT(typeof(GSlider)),
-        _GT(typeof(PopupMenu)),
-        _GT(typeof(ScrollPane)),
-        _GT(typeof(Transition)),
-        _GT(typeof(UIPackage)),
-        _GT(typeof(Window)),
-        _GT(typeof(GObjectPool)),
-        _GT(typeof(Relations)),
-        _GT(typeof(RelationType)),
-        _GT(typeof(Timers)),
-        _GT(typeof(GTween)),
-        _GT(typeof(GTweener)),
-        _GT(typeof(EaseType)),
-        _GT(typeof(TweenValue)),
-        _GT(typeof(UIObjectFactory)),
-        _GT(typeof(UIPanel)),
+        _GT(typeof(Debugger)).SetNameSpace(null),          
 
 #if USING_DOTWEENING
         _GT(typeof(DG.Tweening.DOTween)),
@@ -189,7 +146,7 @@ public static class CustomSettings
 
         _GT(typeof(QualitySettings)),
         _GT(typeof(RenderSettings)),                                                   
-        _GT(typeof(BlendWeights)),           
+        _GT(typeof(SkinWeights)),           
         _GT(typeof(RenderTexture)),
         _GT(typeof(Resources)),     
         _GT(typeof(LuaProfiler)),
@@ -214,7 +171,7 @@ public static class CustomSettings
         typeof(AnimationClip),
         typeof(AnimationState),
 
-        typeof(BlendWeights),
+        typeof(SkinWeights),
         typeof(RenderTexture),
         typeof(Rigidbody),
     };

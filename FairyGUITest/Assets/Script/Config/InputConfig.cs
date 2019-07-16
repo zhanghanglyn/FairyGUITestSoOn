@@ -14,4 +14,5 @@ public enum KeyEnum
     KeyRight = KeyCode.D,
     KeyJump = KeyCode.J,
     KeySlide = KeyCode.K,
+    KeyPick =   KeyCode.K,
 }

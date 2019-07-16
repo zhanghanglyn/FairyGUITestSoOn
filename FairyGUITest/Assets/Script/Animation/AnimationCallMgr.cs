@@ -13,9 +13,9 @@ public class AnimationCallMgr
     public static AnimationCallMgr instance;
 
     //进入动画时、退出动画时、动画进行时的回调，key为动画控制器
-    Dictionary<Animator, System.Action<AnimatorStateInfo>> m_EnterCall;
-    Dictionary<Animator, System.Action<AnimatorStateInfo>> m_ExitCall;
-    Dictionary<Animator, System.Action<AnimatorStateInfo>> m_UpdateCall;
+    Dictionary<Animator, List<System.Action<AnimatorStateInfo>>> m_EnterCall;
+    Dictionary<Animator, List<System.Action<AnimatorStateInfo>>> m_ExitCall;
+    Dictionary<Animator, List<System.Action<AnimatorStateInfo>>> m_UpdateCall;
 
     public static AnimationCallMgr GetInstance()
     {
@@ -29,9 +29,9 @@ public class AnimationCallMgr
 
     public void Init()
     {
-        m_EnterCall = new Dictionary<Animator, System.Action<AnimatorStateInfo>>();
-        m_ExitCall = new Dictionary<Animator, System.Action<AnimatorStateInfo>>();
-        m_UpdateCall = new Dictionary<Animator, System.Action<AnimatorStateInfo>>();
+        m_EnterCall = new Dictionary<Animator, List<System.Action<AnimatorStateInfo>>>();
+        m_ExitCall = new Dictionary<Animator, List<System.Action<AnimatorStateInfo>>>();
+        m_UpdateCall = new Dictionary<Animator, List<System.Action<AnimatorStateInfo>>>();
     }
 
     /// <summary>
@@ -45,7 +45,16 @@ public class AnimationCallMgr
             return;
         if (!m_EnterCall.ContainsKey(_animator))
         {
-            m_EnterCall.Add(_animator, _call);
+            List<System.Action<AnimatorStateInfo>> temp_list = new List<System.Action<AnimatorStateInfo>>();
+            temp_list.Add(_call);
+            // m_EnterCall.Add(_animator, _call);
+            m_EnterCall.Add(_animator, temp_list);
+        }
+        else
+        {
+            //如果没有该回调函数才调用
+            if (m_EnterCall[_animator].Contains(_call) == false)
+                m_EnterCall[_animator].Add(_call);
         }
     }
 
@@ -58,9 +67,19 @@ public class AnimationCallMgr
     {
         if (m_EnterCall == null)
             return;
-        if (!m_EnterCall.ContainsKey(_animator))
+        //19.06.21
+        if (m_EnterCall.ContainsKey(_animator))
         {
-            m_EnterCall.Remove(_animator);
+            if (m_EnterCall[_animator] != null && m_EnterCall[_animator].Contains(_call))
+            {
+                m_EnterCall[_animator].Remove(_call);
+            }
+            //如果改amimator的函数列表已经为空，则清除该animator
+            if (m_EnterCall[_animator].Count <= 0)
+            {
+                m_EnterCall[_animator].Clear();
+                m_EnterCall.Remove(_animator);
+            }
         }
     }
 
@@ -68,10 +87,25 @@ public class AnimationCallMgr
     {
         if (m_EnterCall == null)
             return;
+        //因为在循环中可能涉及清除List的操作，故提取
+        List<System.Action<AnimatorStateInfo>> temp_list = new List<System.Action<AnimatorStateInfo>>();
+
         foreach ( var item in m_EnterCall)
         {
             if (item.Value != null)
-                item.Value(_animatorStateInfo);
+            {
+                foreach( var func in item.Value)
+                {
+                    //func(_animatorStateInfo);
+                    temp_list.Add( func );
+                }
+            }
+            //item.Value(_animatorStateInfo);
+        }
+
+        foreach(var func in temp_list)
+        {
+            func(_animatorStateInfo);
         }
     }
 
@@ -84,9 +118,21 @@ public class AnimationCallMgr
     {
         if (m_ExitCall == null)
             return;
-        if (!m_ExitCall.ContainsKey(_animator))
+        /*if (!m_ExitCall.ContainsKey(_animator))
         {
             m_ExitCall.Add(_animator, _call);
+        }*/
+        if (!m_ExitCall.ContainsKey(_animator))
+        {
+            List<System.Action<AnimatorStateInfo>> temp_list = new List<System.Action<AnimatorStateInfo>>();
+            temp_list.Add(_call);
+            m_ExitCall.Add(_animator, temp_list);
+        }
+        else
+        {
+            //如果没有该回调函数才调用
+            if (m_ExitCall[_animator].Contains(_call) == false)
+                m_ExitCall[_animator].Add(_call);
         }
     }
 
@@ -99,19 +145,48 @@ public class AnimationCallMgr
     {
         if (m_ExitCall == null)
             return;
-        if (!m_ExitCall.ContainsKey(_animator))
+        /*if (!m_ExitCall.ContainsKey(_animator))
         {
             m_ExitCall.Remove(_animator);
+        }*/
+        //19.06.21
+        if (m_ExitCall.ContainsKey(_animator))
+        {
+            if (m_ExitCall[_animator] != null && m_ExitCall[_animator].Contains(_call))
+            {
+                m_ExitCall[_animator].Remove(_call);
+            }
+            //如果改amimator的函数列表已经为空，则清除该animator
+            if (m_ExitCall[_animator].Count <= 0)
+            {
+                m_ExitCall[_animator].Clear();
+                m_ExitCall.Remove(_animator);
+            }
         }
     }
     public void ExitCall(Animator _animator, AnimatorStateInfo _animatorStateInfo)
     {
         if (m_ExitCall == null)
             return;
+
+        //因为在循环中可能涉及清除List的操作，故提取
+        List<System.Action<AnimatorStateInfo>> temp_list = new List<System.Action<AnimatorStateInfo>>();
         foreach (var item in m_ExitCall)
         {
             if (item.Value != null)
-                item.Value(_animatorStateInfo);
+            {
+                foreach (var func in item.Value)
+                {
+                    temp_list.Add(func);
+                    //func(_animatorStateInfo);
+                }
+            }
+            //item.Value(_animatorStateInfo);
+        }
+
+        foreach( var func in temp_list)
+        {
+            func(_animatorStateInfo);
         }
     }
 
@@ -124,9 +199,21 @@ public class AnimationCallMgr
     {
         if (m_UpdateCall == null)
             return;
-        if (!m_UpdateCall.ContainsKey(_animator))
+        /*if (!m_UpdateCall.ContainsKey(_animator))
         {
             m_UpdateCall.Add(_animator, _call);
+        }*/
+        if (!m_UpdateCall.ContainsKey(_animator))
+        {
+            List<System.Action<AnimatorStateInfo>> temp_list = new List<System.Action<AnimatorStateInfo>>();
+            temp_list.Add(_call);
+            m_UpdateCall.Add(_animator, temp_list);
+        }
+        else
+        {
+            //如果没有该回调函数才调用
+            if (m_UpdateCall[_animator].Contains(_call) == false)
+                m_UpdateCall[_animator].Add(_call);
         }
     }
 
@@ -139,19 +226,47 @@ public class AnimationCallMgr
     {
         if (m_UpdateCall == null)
             return;
-        if (!m_UpdateCall.ContainsKey(_animator))
+        /*if (!m_UpdateCall.ContainsKey(_animator))
         {
             m_UpdateCall.Remove(_animator);
+        }*/
+        //19.06.21
+        if (m_UpdateCall.ContainsKey(_animator))
+        {
+            if (m_UpdateCall[_animator] != null && m_UpdateCall[_animator].Contains(_call))
+            {
+                m_UpdateCall[_animator].Remove(_call);
+            }
+            //如果改amimator的函数列表已经为空，则清除该animator
+            if (m_UpdateCall[_animator].Count <= 0)
+            {
+                m_UpdateCall[_animator].Clear();
+                m_UpdateCall.Remove(_animator);
+            }
         }
     }
     public void UpdateCall(Animator _animator, AnimatorStateInfo _animatorStateInfo)
     {
         if (m_UpdateCall == null)
             return;
+        //因为在循环中可能涉及清除List的操作，故提取
+        List<System.Action<AnimatorStateInfo>> temp_list = new List<System.Action<AnimatorStateInfo>>();
+
         foreach (var item in m_UpdateCall)
         {
             if (item.Value != null)
-                item.Value(_animatorStateInfo);
+            {
+                foreach (var func in item.Value)
+                {
+                    //func(_animatorStateInfo);
+                    temp_list.Add(func);
+                }
+            }
+            //item.Value(_animatorStateInfo);
+            foreach( var func in temp_list )
+            {
+                func(_animatorStateInfo);
+            }
         }
     }
 
