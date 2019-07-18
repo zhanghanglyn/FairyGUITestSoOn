@@ -317,7 +317,7 @@ Shader "Zelda/LinkUtil_ST"
 				fixed fresnel2 = pow((1.0 - saturate(dot(worldNormal, worldViewDir))), _DarkFresnelPow);
 				
 				fixed3 light_F = worldLightDir * -1;
-				light_F = fixed3(worldLightDir.x, 1, 1);
+				//light_F = fixed3(worldLightDir.x, 1, 1);
 				fixed F_diff = 1 - saturate(dot(light_F , worldViewDir) + 0.2) + 0.2;
 
 				//暗面
@@ -337,6 +337,15 @@ Shader "Zelda/LinkUtil_ST"
 				diff = diff + fresnel;
 				fixed4 diffuseColor = tex2D(_MainTex, i.uv.xy);
 				diffuseColor.rgb += specular;
+
+				//test add AO 将AO贴图作为基础颜色加上,主要是在光线不足时，显示一个AO效果
+				fixed ao_diff = (1 - atten) * ao.r;
+				ao_diff += 1 - (1 - atten);
+				//fixed ao_diff = save_atten * ao.r;
+				ao_diff = smoothstep(_ShadowStep, _ShadowStep + 0.01, ao_diff);
+				ao_diff = Unity_Remap_float(ao_diff, fixed2(0, 1), fixed2(0.7, 1));
+				diffuseColor.rgb *= ao_diff;
+
 				diffuseColor.rgb = diffuseColor.rgb * diff * LightColor;
 				if (_BeUseMetallicMap)
 					diffuseColor.rgb += (diffuseColor.rgb * _MetallicVal * diff * LightColor * metallic);
